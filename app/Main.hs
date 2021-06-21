@@ -19,16 +19,18 @@ color = vec4 (a, a, a, 1)
                 ]
 -}
 
+--works for glsl-canvas
 color :: Vec4
 color = vec4 (a, a, a, 1)
     where
-        uvN = (xy_ a_position - ( 0.5 * xy_ u_resolution)) / xy_ u_resolution :: Vec2
+        uvN = xy_ gl_fragcoord - ( 0.5 * xy_ u_resolution) / xy_ u_resolution :: Vec2
         k = 20
         f = (*k) . sin . (/k)
         a = sum [ cos (x_ uvN * f u_time + x_ u_mouse )
                 , sin (y_ uvN * f u_time + y_ u_mouse )
                 ]
 
+--works for glslsandbox
 color2 = vec4 (a, a, a, 1)
     where
         uvN = (xy_ gl_fragcoord - ( 0.5 * xy_ resolution)) / xy_ resolution :: Vec2
