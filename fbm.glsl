@@ -11,26 +11,6 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform vec2 u_mouse;
 
-mat3 rotX(float a) {
-	float c = cos(a);
-	float s = sin(a);
-	return mat3(
-		1, 0, 0,
-		0, c, -s,
-		0, s, c * u_mouse
-	);
-}
-mat3 rotY(float a) {
-	float c = cos(a);
-	
-	float s = sin(a);
-	return mat3(
-		c, 0, -s,
-		0, 1, 0,
-		s, 0, c + u_mouse
-	);
-}
-
 float random(vec2 pos) {
 	return fract(sin(dot(pos.xy, vec2(12.9898, 78.233))) * 43758.5453123);
 }
