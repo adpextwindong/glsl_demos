@@ -73,3 +73,5 @@ printGLSLCanvas program = do
     putStrLn "uniform vec2 u_mouse;"
     putStrLn "vec4 a_position;"
     putStr $ show program
+
+--We need mat3 mat2 support in Hylogen to port the fbm example.
