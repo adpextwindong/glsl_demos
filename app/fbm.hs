@@ -29,3 +29,11 @@ noise pos = (mix (x_ u) a b) + (c - a) * (y_ u) * (1.0 - x_ u) + (d - b) * (x_ u
         c = mrandom $ i + vec2 (0.0, 1.0)
         d = mrandom $ i + vec2 (1.0, 1.0)
         u = f * f * (3.0 - 2.0 * f)
+
+fbm :: Vec2 -> Vec1
+fbm pos = undefined
+    where a = 0.5
+          vinit = 0.5
+          shift = vec2(100.0, 100.0) + mouse
+          rot = mat22 ((cos 0.1) , (sin 0.5), (- sin 0.5), (cos 0.5))
+          --TODO finish fbm and the main
