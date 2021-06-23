@@ -30,10 +30,15 @@ noise pos = (mix (x_ u) a b) + (c - a) * (y_ u) * (1.0 - x_ u) + (d - b) * (x_ u
         d = mrandom $ i + vec2 (1.0, 1.0)
         u = f * f * (3.0 - 2.0 * f)
 
+num_octaves = 16 --TODO
+
 fbm :: Vec2 -> Vec1
-fbm pos = undefined
+fbm pos = v
     where a = 0.5
           vinit = 0.5
           shift = vec2(100.0, 100.0) + mouse
           rot = mat22 ((cos 0.1) , (sin 0.5), (- sin 0.5), (cos 0.5))
           --TODO finish fbm and the main
+          fbmOctave (v,pos,a) = (v + a * noise pos, mul rot (pos * 2.0 + shift + mouse), a * 0.5)
+          xs = iterate fbmOctave (vinit, pos, a)
+          (v, _, _) = xs !! num_octaves
