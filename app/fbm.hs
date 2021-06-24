@@ -37,7 +37,7 @@ fbm num_octaves pos = v
 octaves = 16
 
 color :: Vec4
-color = undefined
+color = vec4 (x_ end_color, y_ end_color, z_ end_color, 1.0)
     where p = ((xy_ gl_FragCoord * 2.0 * xy_ resolution) / vec2 (minrz, minrz)) - mouse / 100.1 :: Vec2
           --Ideally vec2 / vec1 should work but the fractional instance forces a -> a -> a
           --Making it expect a vec1 on the right side of the /
@@ -60,4 +60,5 @@ color = undefined
           t3 = clamp (len (x_ r)) 0.0 1.0
           c3 = mix t3 (vec3 (1, 1, 0.5)) c2
 
-          end_color = (f * f * f + 0.5 *f * f + 0.6 * f) --TODO fix this last bit
+          fbunch = (f * f * f + 0.5 *f * f + 0.6 * f)
+          end_color = vec3 (fbunch, fbunch, fbunch) * c3 --TODO fix this last bit
