@@ -1,3 +1,7 @@
+# NOTE ABOUT FIDDLING WITH HYLOGEN LOCALLY
+
+If GHCI gives you any stink after you run cabal v2-install --lib then edit your %appdata%/ghc/.../environments/default file to get rid of multiple Hylogen instances.
+
 example.glsl from http://glslsandbox.com/e#73520.2
 
 ## 6/25/21
