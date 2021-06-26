@@ -36,11 +36,16 @@ noise pos = mix a b (x_ u) +
 --TODO Expose monoToProgram and test these functions indvidiually
 fbm :: Int -> Vec2 -> Vec1
 fbm num_octaves pos = v
-    where a = 0.5
-          vinit = 0.5
+    where
+          vinit = 0.0
+          a = 0.5
           shift = vec2(100.0, 100.0) + mouse :: Vec2
           rot = mat22 ((cos 0.1) , (sin 0.5), (- sin 0.5), (cos 0.5)) :: M22
-          fbmOctave (v,pos,a) = (v + a * noise pos, ((rot *^* pos) * 2.0) + shift + mouse, a * 0.5)
+
+          fbmOctave (v,pos,a) = (v + (a * noise pos),
+                                ((rot *^* pos) * 2.0) + shift + mouse,
+                                a * 0.5)
+
           xs = iterate fbmOctave (vinit, pos, a) --I hope this works
           (v, _, _) = xs !! num_octaves
 
