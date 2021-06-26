@@ -32,3 +32,13 @@ The current port of this [Lines.hs](app/Lines.hs) nearly works. The math for the
 http://glslsandbox.com/e#73601.0
 
 Heres what it looks like on GLSLSandbox at least
+
+### FBM Example
+
+The [FBM example](app/fbm.hs) is my first Hylogen example that uses matrix support. Its literally one usage of the *^* operator in the fbm function but it works for now.
+
+Doing this example has shown the rough spots of this DSL. The num and fractional typeclasses railroad you into rewriting expressions because they constrain to Vec n -> Vec n -> Vec n.
+
+This isn't bad when you're multiplying up but diving by a float is annoying.
+
+Another thing to note that I realized is the floating point constants get mangled during compilation. It might be worth assigning constants to uniforms or something honestly. I have to look into this.
