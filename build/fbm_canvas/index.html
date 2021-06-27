@@ -20,9 +20,9 @@
 		/*
 		stats.js
 		*/
-		var stats = new Stats();
-		stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-		document.body.appendChild(stats.dom);
+		// var stats = new Stats();
+		// stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+		// document.body.appendChild(stats.dom);
 
 		/*
 		glsl-canvas.js
@@ -35,18 +35,18 @@
 			alpha: true,
 			antialias: true,
 			premultipliedAlpha: false,
-			preserveDrawingBuffer: false, 
+			preserveDrawingBuffer: false,
 			extensions: ["OES_standard_derivatives"],
 			doubleSided: false,
 		};
 		var canvas = document.querySelector('.glsl-canvas');
 		var glsl = new glsl.Canvas(canvas, options);
 		glsl.setUniforms({});
-		glsl.on('render', function () {
-			stats.end();
-			// execute here custom code on every raf tick
-			stats.begin();
-		});
+		// glsl.on('render', function () {
+		// 	// stats.end();
+		// 	// execute here custom code on every raf tick
+		// 	// stats.begin();
+		// });
 	</script>
 
 	</html>
