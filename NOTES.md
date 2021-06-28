@@ -50,3 +50,5 @@ Further reading
 https://www.iquilezles.org/www/material/nvscene2008/rwwtt.pdf
 
 TODO: We need to figure out a good way to compose distance fields and their respective coloring.
+
+[Domain Specific Languages for Small Embedded Systems](https://www.ittc.ku.edu/research/thesis/documents/mark_grebe_thesis.pdf)
