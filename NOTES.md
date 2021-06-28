@@ -42,3 +42,11 @@ Doing this example has shown the rough spots of this DSL. The num and fractional
 This isn't bad when you're multiplying up but diving by a float is annoying.
 
 Another thing to note that I realized is the floating point constants get mangled during compilation. It might be worth assigning constants to uniforms or something honestly. I have to look into this.
+
+----
+
+Further reading
+
+https://www.iquilezles.org/www/material/nvscene2008/rwwtt.pdf
+
+TODO: We need to figure out a good way to compose distance fields and their respective coloring.
