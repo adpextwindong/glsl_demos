@@ -20,6 +20,11 @@ dot = op2pre' "dot"
 -- https://www.youtube.com/watch?v=9g8CdctxmeU
 -- http://www.codinglabs.net/article_world_view_projection_matrix.aspx
 
+iPlane :: Vec3 -> Vec3 -> Vec1
+iPlane ro rd = (- y_ ro) / (y_ rd)
+-- Equation of a plane, y = 0 = ro.y + t*rd.y
+--
+
 iSphere :: Vec3 -> Vec3 -> Vec1
 iSphere ro rd = result
     where
@@ -36,11 +41,44 @@ iSphere ro rd = result
 -- now, xyz = ro + t*rd, therefore |ro|^2 + t^2 + 2<ro,rd>t - r^2 = 0
 -- which is a quadratic equation so
 
-
-intersect :: Vec3 -> Vec3 -> Vec1
-intersect ro rd = t
+-- The scene contents are handled here
+-- TODO we should have some newtyping around id
+intersect :: Vec3 -> Vec3 -> (Vec1, Vec1)
+intersect ro rd = (tid, trez)
     where
-        t = iSphere ro rd
+        (t_sphere, id_sphere) = (iSphere ro rd, 1.0)
+        (t_plane, id_plane)  = (iPlane ro rd, 2.0) --TODO handle this better
+
+        id_null = -1.0 --No intersection
+
+        rez_sphere = sel (gt t_sphere 0.0) id_sphere id_null --We should really handle this as a maybe if we can
+        rez_plane  = sel (gt t_plane 0.0) id_plane id_null
+
+        tid = sel (eq (max_ rez_sphere rez_plane) id_null)
+            --no intersection
+                id_null
+            --find closest between sphere and plane
+                (sel (lt t_plane t_sphere)
+                    id_plane
+                    id_sphere)
+
+        {-
+        trez = sel (eq tid id_null) -1.0
+                   (sel (eq tid id_plane) t_plane
+                                         t_sphere)
+        This doesn't type check and is a pain point of Hylogen so far
+        -}
+        trez = sel (eq (max_ rez_sphere rez_plane) id_null)
+            --no intersection
+                id_null
+            --find closest between sphere and plane
+                (sel (lt t_plane t_sphere)
+                    t_plane
+                    t_sphere)
+
+        --NOTE: Hylogen's sel can't reason about tuples unfortunately
+        --sel :: forall a. ToGLSLType a => Booly -> Expr a -> Expr a -> Expr a
+
 
 color :: Vec4
 color = vec4(result, 1.0)
@@ -56,10 +94,15 @@ color = vec4(result, 1.0)
         -- https://www.shadertoy.com/view/fsBGRc#
 
         --Intersect the ray with the 3d scene
-        id = intersect ro rd
+        (id, t) = intersect ro rd
 
         --Draw black by default
         bg_col = vec3(0.0,0.0,0.0)
         white = vec3(1.0,1.0,1.0)
+        red = vec3(1.0, 0.0, 0.0)
 
-        result = sel (gt 0.0 id) white bg_col
+        pixel_color = sel (eq (-1.0) id) bg_col
+                        (sel (eq 1.0 id) white
+                            red)
+
+        result = sel (gt 0.0 t) white bg_col
